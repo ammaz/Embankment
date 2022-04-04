@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Medic Camp
   icon: {fileID: 21300000, guid: cf8aaaec9e5dc354aa923a555aa9091c, type: 3}
+  itemDescription: Heal soldiers

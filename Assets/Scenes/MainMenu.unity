@@ -1269,7 +1269,7 @@ GameObject:
   - component: {fileID: 779043954}
   - component: {fileID: 779043953}
   m_Layer: 5
-  m_Name: InventoryItemTransform
+  m_Name: InventorySlotParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1292,7 +1292,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 780}
+  m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &779043953
 MonoBehaviour:
@@ -1656,7 +1656,7 @@ RectTransform:
   m_Father: {fileID: 1193915009}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.35689867}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -2287,7 +2287,8 @@ MonoBehaviour:
   inventoryParent: {fileID: 1089827051}
   inventoryTab: {fileID: 979797269}
   craftingTab: {fileID: 453996855}
-  itemSlotPrefab: {fileID: 3248700993357844560, guid: 48fb52428bacbb841ab5c56fef6fea62, type: 3}
+  inventorySlotPrefab: {fileID: 3248700993357844560, guid: 7c775391bda197947aa27a831533d341, type: 3}
+  craftingSlotPrefab: {fileID: 3248700993357844560, guid: 48fb52428bacbb841ab5c56fef6fea62, type: 3}
   inventoryItemTransform: {fileID: 779043952}
   craftingItemTransform: {fileID: 1765124897}
 --- !u!4 &1478884378
@@ -2335,6 +2336,8 @@ MonoBehaviour:
   craftingRecipies:
   - {fileID: 11400000, guid: b05f1f65fead422499552229da9429fa, type: 2}
   - {fileID: 11400000, guid: 3104a71106032a1489b71413e1da32ae, type: 2}
+  canvas: {fileID: 1851493063}
+  itemInfoPrefab: {fileID: 4035824706007106606, guid: e51bf0197cf10424dba668031bd88c98, type: 3}
 --- !u!1 &1641026671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3178,8 +3181,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1000408317}
   m_HandleRect: {fileID: 1000408316}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.64310133
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

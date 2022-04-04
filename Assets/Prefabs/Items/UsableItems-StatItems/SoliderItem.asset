@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Rifleman
   icon: {fileID: 21300000, guid: 8818eeaecf694cb43842f0fe12b7debd, type: 3}
+  itemDescription: Soldier Item
   itemType: 0
   amount: 1

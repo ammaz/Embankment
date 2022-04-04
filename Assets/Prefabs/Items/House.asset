@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: House
   icon: {fileID: 21300000, guid: e6db221b7ee3cd44d878a5d79f207f7e, type: 3}
+  itemDescription: House for soldiers

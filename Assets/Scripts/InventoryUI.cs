@@ -17,9 +17,12 @@ public class InventoryUI : MonoBehaviour
 
     //This will store references of item slots that are currently in use
     private List<ItemSlot> itemSlotList = new List<ItemSlot>();
-    public GameObject itemSlotPrefab;
-    public Transform inventoryItemTransform;
 
+
+    public GameObject inventorySlotPrefab;
+    public GameObject craftingSlotPrefab;
+
+    public Transform inventoryItemTransform;
     //Crafting Recipies
     public Transform craftingItemTransform;
 
@@ -45,7 +48,7 @@ public class InventoryUI : MonoBehaviour
         foreach(Item recipe in craftingRecipes)
         {
             //Adding Recipie to crafting tab
-            GameObject Go = Instantiate(itemSlotPrefab, craftingItemTransform);
+            GameObject Go = Instantiate(craftingSlotPrefab, craftingItemTransform);
             ItemSlot slot = Go.GetComponent<ItemSlot>();
             slot.AddItem(recipe);
         }
@@ -87,7 +90,7 @@ public class InventoryUI : MonoBehaviour
 
         for(int i = 0; i < amount; ++i)
         {
-            GameObject GO = Instantiate(itemSlotPrefab, inventoryItemTransform);
+            GameObject GO = Instantiate(inventorySlotPrefab, inventoryItemTransform);
             ItemSlot newSlot = GO.GetComponent<ItemSlot>();
             itemSlotList.Add(newSlot);
         }

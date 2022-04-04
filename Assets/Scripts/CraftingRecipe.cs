@@ -55,6 +55,17 @@ public class CraftingRecipe : Item
         }
     }
 
+    public override string GetItemDescription()
+    {
+        string itemIngredients = "";
+
+        foreach (Ingredient ingredient in ingredients)
+        {
+            itemIngredients += "- " + ingredient.amount + " " + ingredient.item.name + "\n";
+        }
+
+        return itemIngredients;
+    }
 
     [System.Serializable]
     public class Ingredient
