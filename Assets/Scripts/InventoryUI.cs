@@ -14,6 +14,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] public GameObject inventoryParent;
     [SerializeField] public GameObject inventoryTab;
     [SerializeField] public GameObject craftingTab;
+    [SerializeField] public GameObject hotbarTab;
 
     //This will store references of item slots that are currently in use
     private List<ItemSlot> itemSlotList = new List<ItemSlot>();
@@ -100,6 +101,7 @@ public class InventoryUI : MonoBehaviour
     {
         inventoryOpen = true;
         inventoryParent.SetActive(true);
+        hotbarTab.SetActive(true);
     }
 
     public void CloseInventory()
@@ -107,6 +109,7 @@ public class InventoryUI : MonoBehaviour
         OnInvetoryTabClicked();
         inventoryOpen = false;
         inventoryParent.SetActive(false);
+        hotbarTab.SetActive(false);
     }
 
     public void OnCraftingTabClicked()

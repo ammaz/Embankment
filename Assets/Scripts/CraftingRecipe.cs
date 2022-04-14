@@ -18,7 +18,7 @@ public class CraftingRecipe : Item
         foreach(Ingredient ingredient in ingredients)
         {
             //Here instance is a unique object of class inventory with distinct properites.
-            bool containsCurrentIngredient = Inventory.instance.ContainsItem(ingredient.item, ingredient.amount);
+            bool containsCurrentIngredient = Inventory.instance.ContainsItem(ingredient.item.name, ingredient.amount);
 
             if (!containsCurrentIngredient)
             {
@@ -33,7 +33,7 @@ public class CraftingRecipe : Item
     {
         foreach (Ingredient ingredient in ingredients)
         {
-            Inventory.instance.RemoveItems(ingredient.item, ingredient.amount);
+            Inventory.instance.RemoveItems(ingredient.item.name, ingredient.amount);
         }
 
     }

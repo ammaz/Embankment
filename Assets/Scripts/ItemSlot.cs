@@ -7,6 +7,11 @@ public class ItemSlot : MonoBehaviour
 {
     public Image icon;
     private Item item;
+    //Is an item being dragged by player?
+    public bool isBeingDraged = false;
+
+    //Returning current Item
+    public Item Item => item;
 
     public void AddItem(Item newItem)
     {
@@ -14,12 +19,26 @@ public class ItemSlot : MonoBehaviour
         icon.sprite = newItem.icon;
     }
 
+    //Clearing slot when the item will be destroyed/used
+    public void ClearSlot()
+    {
+        item = null;
+        icon.sprite = null;
+    }
+
     public void UseItem()
     {
-        if (item != null)
+        if (item == null || isBeingDraged == true) return;   
+
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            Debug.Log("Trying to switch");
+            Inventory.instance.SwitchHorbarInventory(item);
+        }
+        else
         {
             item.Use();
-        }
+        }   
     }
 
     public void DestroySlot()
@@ -38,12 +57,17 @@ public class ItemSlot : MonoBehaviour
     //Mouse hower system to display item info (Subject to change) (ForTouchSystem)
     public void OnCursorEnter()
     {
+        //If there is no item in the slot this function will return
+        if (item == null || isBeingDraged == true) return;
         //Display item info
         GameManager.instance.DisplayItemInfo(item.name, item.GetItemDescription(), transform.position);
     }
 
     public void OnCursorExit()
     {
+        //If there is no item in the slot this function will return
+        if (item == null) return;
+        //Display item info exit
         GameManager.instance.DestroyItemInfo();
     }
 }

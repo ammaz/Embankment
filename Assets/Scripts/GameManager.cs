@@ -21,16 +21,24 @@ public class GameManager : MonoBehaviour
     public GameObject itemInfoPrefab;
     private GameObject currentItemInfo = null;
 
-    //For Description Panel Position (To remove Flickering) (Subject to change) (ForTouchSystem)
+    /*//For Description Panel Position (To remove Flickering) (Subject to change) (ForTouchSystem)
     public float moveX = 0f;
-    public float moveY = 0f;
+    public float moveY = 0f;*/
+
+    public Transform mainCanvas;
+    public Transform hotbarTransform;
+    public Transform inventoryTransform;
 
     void Update()
     {
-        //To add Item in our inventory
+        //To add Item in our inventory (Subject to change) (For mobile touch system)
         if (Input.GetKeyDown(KeyCode.X))
         {
-            Inventory.instance.AddItem(itemList[Random.Range(0, itemList.Count)]);
+            //Instantiating new item just to add different reference in memory thats why I have used newItem variable here
+            Item newItem = itemList[Random.Range(0, itemList.Count)];
+            Inventory.instance.AddItem(Instantiate(newItem));
+
+            //Inventory.instance.AddItem(itemList[Random.Range(0, itemList.Count)]);
         }
     }
 
