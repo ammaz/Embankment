@@ -13,7 +13,8 @@ public class ItemSlot : MonoBehaviour
     //Returning current Item
     public Item Item => item;
 
-    public void AddItem(Item newItem)
+    //Using virtual funtion so that it can be modified in derived class aswell
+    public virtual void AddItem(Item newItem)
     {
         item = newItem;
         icon.sprite = newItem.icon;

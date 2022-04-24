@@ -30,6 +30,11 @@ public class Inventory : MonoBehaviour
     public List<Item> hotbarItemList = new List<Item>();
     public HotbarController hotbarController;
 
+    //Adding crafting Queue
+    private Queue<CraftingRecipe> craftingQueue = new Queue<CraftingRecipe>();
+    //Check for if player is currently crafting or not
+    private bool isCrafting = false;
+
     //This function will take care for switching the item (We will send the item that we want to switch to from inventory to hotbar)
     public void SwitchHorbarInventory(Item item)
     {
@@ -147,6 +152,65 @@ public class Inventory : MonoBehaviour
                 hotbarItemList.Remove(i);
                 return;
             }
+        }
+    }
+
+    public void AddCraftingItem(CraftingRecipe newRecipe)
+    {
+        craftingQueue.Enqueue(newRecipe);
+
+        if (!isCrafting)
+        {
+            isCrafting = true;
+            //Start Crafting
+            StartCoroutine(CrafItem());
+        }
+    }
+
+    //Function for crafting an item
+    private IEnumerator CrafItem()
+    {
+        //Check if queue is empty
+        if(craftingQueue.Count == 0)
+        {
+            isCrafting = false;
+            yield break;
+        }
+
+        CraftingRecipe currentRecipe = craftingQueue.Dequeue();
+
+        //Check if we have enough resources
+        if (!currentRecipe.CrafItem())
+        {
+            ResetCraftingTexts();
+            craftingQueue.Clear();
+            isCrafting = false;
+            yield break;
+        }
+
+
+        yield return new WaitForSeconds(currentRecipe.craftTime * 1.1f);
+
+        //Add Item to inventory
+        AddItem(currentRecipe.result);
+
+        //Check if continue crafting
+        if(craftingQueue.Count > 0)
+        {
+            yield return StartCoroutine(CrafItem());
+        }
+        else
+        {
+            isCrafting = false;
+        }
+    }
+
+    //To solve a bug where if we run out of items to craft but still have something in our crafting queue we get stuck
+    private void ResetCraftingTexts()
+    {
+        foreach(CraftingRecipe recipe in craftingQueue)
+        {
+            recipe.parentCraftingSlot.ResetCount();
         }
     }
 }

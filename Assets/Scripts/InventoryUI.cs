@@ -50,8 +50,11 @@ public class InventoryUI : MonoBehaviour
         {
             //Adding Recipie to crafting tab
             GameObject Go = Instantiate(craftingSlotPrefab, craftingItemTransform);
-            ItemSlot slot = Go.GetComponent<ItemSlot>();
+            CraftingSlot slot = Go.GetComponent<CraftingSlot>();
             slot.AddItem(recipe);
+
+            CraftingRecipe craftRecipe = (CraftingRecipe)recipe;
+            craftRecipe.parentCraftingSlot = slot;
         }
     }
 

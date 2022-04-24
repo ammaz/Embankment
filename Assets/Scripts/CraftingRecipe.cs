@@ -11,6 +11,10 @@ public class CraftingRecipe : Item
     public Item result;
     //Ingredients of the item that we have to collect in order to craft it
     public Ingredient[] ingredients;
+    //Crating Time
+    public float craftTime = 1f;
+    //Crafting Slot
+    public CraftingSlot parentCraftingSlot;
 
     private bool CanCraft()
     {
@@ -38,21 +42,27 @@ public class CraftingRecipe : Item
 
     }
 
+    public bool CrafItem()
+    {
+        if (!CanCraft()) return false;
+
+        //For crafting queue count
+        parentCraftingSlot.DecreaseCount();
+        //Removing ingredients from inventory
+        RemoveIngredientsFromInventory();
+        //Start Crafting
+        parentCraftingSlot.StartCrafting();
+
+        return true;
+
+    }
+
     public override void Use()
     {
-        if (CanCraft())
-        {
-            //Remove Items
-            RemoveIngredientsFromInventory();
-
-            //Add a item to the inventory
-            Inventory.instance.AddItem(result);
-            Debug.Log("You just crafted a: " + result.name);
-        }
-        else
-        {
-            Debug.Log("You dont have enough ingredients to craft: " + result.name);
-        }
+        //For crafting queue count
+        parentCraftingSlot.IncreaseCount();
+        //For adding crafting item
+        Inventory.instance.AddCraftingItem(this);
     }
 
     public override string GetItemDescription()
