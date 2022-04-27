@@ -71,4 +71,11 @@ public class GameManager : MonoBehaviour
             Destroy(currentItemInfo.gameObject);
         }
     }
+
+    public void AddItemToInventory()
+    {
+        //Instantiating new item just to add different reference in memory thats why I have used newItem variable here
+        Item newItem = itemList[Random.Range(0, itemList.Count)];
+        Inventory.instance.AddItem(Instantiate(newItem));
+    }
 }
