@@ -29,6 +29,13 @@ public class GameManager : MonoBehaviour
     public Transform hotbarTransform;
     public Transform inventoryTransform;
 
+    void Start()
+    {
+        AddMoneyItemToInventory(100);
+        AddOilItemToInventory(50);
+        MainMenu.instance.CountMoneyOrOil();
+    }
+
     void Update()
     {
         //To add Item in our inventory (Subject to change) (For mobile touch system)
@@ -77,5 +84,27 @@ public class GameManager : MonoBehaviour
         //Instantiating new item just to add different reference in memory thats why I have used newItem variable here
         Item newItem = itemList[Random.Range(0, itemList.Count)];
         Inventory.instance.AddItem(Instantiate(newItem));
+
+        //Counting number of Oil and Money
+        MainMenu.instance.CountMoneyOrOil();
+    }
+
+    //Adding Money to Inventory
+    public void AddMoneyItemToInventory(int amount)
+    {
+        for(int a = 0; a < amount; a++)
+        {
+            //0 index for Money, change it if you add/delete index of items in your gameManager object (Subject to change)
+            Inventory.instance.AddItem(itemList[0]);
+        }
+    }
+    //Adding Oil to Inventory
+    public void AddOilItemToInventory(int amount)
+    {
+        for (int a = 0; a < amount; a++)
+        {
+            //0 index for Money, change it if you add/delete index of items in your gameManager object (Subject to change)
+            Inventory.instance.AddItem(itemList[1]);
+        }
     }
 }
