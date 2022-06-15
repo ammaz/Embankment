@@ -71,8 +71,6 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         currentPreview.transform.position = Input.mousePosition;
     }
 
-
-
     // Update is called once per frame
     void Update()
     {
@@ -90,10 +88,13 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         image.color = baseColor;
 
         //This condition is checking if we let go our mouse pointer over hotbar ractangle UI
-        if ( (RectTransformUtility.RectangleContainsScreenPoint(hotbarRect, Input.mousePosition) && !isHotbarSlot)
-            || (RectTransformUtility.RectangleContainsScreenPoint(inventoryRect, Input.mousePosition) && isHotbarSlot) )
+        if ( (RectTransformUtility.RectangleContainsScreenPoint(hotbarRect, Input.mousePosition) && !isHotbarSlot))
         {
             Inventory.instance.SwitchHorbarInventory(itemSlot.Item);
+        }
+        else if ((RectTransformUtility.RectangleContainsScreenPoint(inventoryRect, Input.mousePosition) && isHotbarSlot))
+        {
+            Inventory.instance.SwitchHorbarToInventory(itemSlot.Item);
         }
 
         //Destroying preview of the selected item

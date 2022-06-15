@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7d7252fa53a8f44b02aa311545dc86, type: 3}
+  m_Name: SoldierRecipe
+  m_EditorClassIdentifier: 
+  name: Soldier Recipe
+  icon: {fileID: 21300000, guid: 7dcb59c8aa2f4f247b7e28509a83cb14, type: 3}
+  itemDescription: Used for crafting
+  result: {fileID: 11400000, guid: 5adc14e90b19e324a9ca1cbd7ecc60e7, type: 2}
+  ingredients:
+  - item: {fileID: 11400000, guid: 1a685f2060407034488b342441ed5fbe, type: 2}
+    amount: 10
+  - item: {fileID: 11400000, guid: ec735f338016ad7459658e4d5be6c7e6, type: 2}
+    amount: 5
+  craftTime: 5
+  parentCraftingSlot: {fileID: 0}

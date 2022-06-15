@@ -129,7 +129,7 @@ public class InventoryUI : MonoBehaviour
         //Counting number of Oil and Money
         MainMenu.instance.CountMoneyOrOil();
     }
-
+    //Here I can add item stack system
     private void AddItemSlots(int currentItemCount)
     {
         int amount = currentItemCount - itemSlotList.Count;

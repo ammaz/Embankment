@@ -61,7 +61,7 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
-
+        /*
         //hotbar to inventory
         foreach(Item i in hotbarItemList)
         {
@@ -74,9 +74,26 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+        */
     }
 
-    public void AddItem(Item item)
+    public void SwitchHorbarToInventory(Item item)
+    {
+        //hotbar to inventory
+        foreach (Item i in hotbarItemList)
+        {
+            if (i == item)
+            {
+                Debug.Log("hotbar to inventory");
+                hotbarItemList.Remove(item);
+                inventoryItemList.Add(item);
+                onItemChange.Invoke();
+                return;
+            }
+        }
+    }
+
+        public void AddItem(Item item)
     {
         inventoryItemList.Add(item);
         if (item.name == "Oil" || item.name == "Money")

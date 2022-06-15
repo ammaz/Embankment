@@ -78,23 +78,23 @@ public class MainMenu : MonoBehaviour
         levelIndex = sceneIndex;
         if (levelIndex == 1)
         {
-            levelInfo.text = "Level 1\n\nLevel Info";
+            levelInfo.text = "Level 1\n\nDesert Island";
         }
         else if (levelIndex == 2)
         {
-            levelInfo.text = "Level 2\n\nLevel Info";
+            levelInfo.text = "Level 2\n\nVolcanic Island";
         }
         else if (levelIndex == 3)
         {
-            levelInfo.text = "Level 3\n\nLevel Info";
+            levelInfo.text = "Level 3\n\nSnow Island";
         }
         else if (levelIndex == 4)
         {
-            levelInfo.text = "Level 4\n\nLevel Info";
+            levelInfo.text = "Level 4\n\nForest Island";
         }
         else if (levelIndex == 5)
         {
-            levelInfo.text = "Level 5\n\nLevel Info";
+            levelInfo.text = "Level 5\n\nBeach Island";
         }
         else
         {
