@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class MainMenu : MonoBehaviour
 {
@@ -104,15 +105,22 @@ public class MainMenu : MonoBehaviour
 
     public IEnumerator LoadAsynchronously(int sceneIndex)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        slider.value = 0;
 
-        while (!operation.isDone)
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(1);
+        asyncOperation.allowSceneActivation = false;
+        float progress = 0;
+
+        while (!asyncOperation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            //Curent progress
+            progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
             slider.value = progress;
-            progressText.text = (int)progress * 100 + "%";
-
+            progressText.text = Math.Round((decimal)progress, 1) * 100 + "%";
+            if (progress >= 0.9f)
+            {
+                slider.value = 1;
+                asyncOperation.allowSceneActivation = true;
+            }
             yield return null;
         }
     }

@@ -22,4 +22,9 @@ public class Settings : MonoBehaviour
     {
         Music.volume = musicSlider.value;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

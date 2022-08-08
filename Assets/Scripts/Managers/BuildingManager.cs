@@ -1,14 +1,14 @@
 using BitBenderGames;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildingManager : MonoBehaviour
 {
-    //Objects for hotbar
-    public GameObject[] objects;
     public GameObject pendingObject;
+    //public GameObject[] objectList;
 
     //Position where we want to put our objects
     private Vector3 pos;
@@ -34,6 +34,10 @@ public class BuildingManager : MonoBehaviour
     //For Camera
     public MobileTouchCamera gameCamera;
 
+    //For Object Confirm UI
+    public Text objName;
+    public GameObject objConfirmUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +49,7 @@ public class BuildingManager : MonoBehaviour
     {
         if(pendingObject != null)
         {
-            if (gridOn)
+            /*if (gridOn)
             {
                 pendingObject.transform.position = new Vector3(
                     RoundToNearestGrid(pos.x),
@@ -56,10 +60,11 @@ public class BuildingManager : MonoBehaviour
             else
             {
                 pendingObject.transform.position = pos;
-            }
+            }*/
 
             UpdateMaterials();
 
+            /*
             //(Subject to change) (Mobile Touch System)
             if (Input.GetMouseButtonDown(0) && canPlace)
             {
@@ -68,18 +73,57 @@ public class BuildingManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 RotateObject();
+            }*/
+
+            var touchCount = Input.touchCount;
+
+            if (touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                TouchPhase phase = touch.phase;
+
+                if(phase == TouchPhase.Began)
+                {
+
+                }   
+                else if (phase == TouchPhase.Moved)
+                {
+                    if (gridOn)
+                    {
+                        pendingObject.transform.position = new Vector3(
+                            RoundToNearestGrid(pos.x),
+                            RoundToNearestGrid(pos.y),
+                            RoundToNearestGrid(pos.z)
+                            );
+                    }
+                    else
+                    {
+                        pendingObject.transform.position = pos;
+                    }
+                }
+                else if (phase == TouchPhase.Ended && canPlace)
+                {
+                    //PlaceObject();
+                }
             }
         }
     }
 
+    
     private void FixedUpdate()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if(Physics.Raycast(ray, out hit, 1000, layerMask))
+        if(Input.touchCount > 0)
         {
-            pos = hit.point;
-        }
+            Touch touch = Input.GetTouch(0);
+            Ray ray = Camera.main.ScreenPointToRay(touch.position);
+
+            if (Physics.Raycast(ray, out hit, 1000, layerMask))
+            {
+                pos = hit.point;
+            }
+
+        }    
     }
 
     void UpdateMaterials()
@@ -97,18 +141,27 @@ public class BuildingManager : MonoBehaviour
     //Select object (Need to use it with hotbar for future)
     public void SelectObject(int index)
     {
-        Debug.Log("SelectObject");
-        gameCamera.enabled = false;
-        pendingObject = Instantiate(objects[index], pos, transform.rotation);
-        materials[2] = pendingObject.GetComponent<MeshRenderer>().material;
+        if (HotbarManager.instance.HotbarObjects[index] != null && HotbarManager.instance.HotbarObjects[index].tag == "Object")
+        {
+            Debug.Log("SelectObject");
+            gameCamera.enabled = false;
+            pendingObject = Instantiate(HotbarManager.instance.HotbarObjects[index], pos, transform.rotation);
+            materials[2] = pendingObject.GetComponent<MeshRenderer>().material;
+            objConfirmUI.SetActive(true);
+            objName.text = "" + HotbarManager.instance.HotbarObjects[index].name;
+        }
     }
 
     public void PlaceObject()
     {
-        Debug.Log("PlaceObject");
-        gameCamera.enabled = true;
-        pendingObject.GetComponent<MeshRenderer>().material = materials[2];
-        pendingObject = null;
+        if (canPlace)
+        {
+            Debug.Log("PlaceObject");
+            gameCamera.enabled = true;
+            pendingObject.GetComponent<MeshRenderer>().material = materials[2];
+            pendingObject = null;
+            objConfirmUI.SetActive(false);
+        }  
     }
 
     public void RotateObject()
@@ -116,6 +169,13 @@ public class BuildingManager : MonoBehaviour
         Debug.Log("RotateObject");
         gameCamera.enabled = true;
         pendingObject.transform.Rotate(Vector3.up, rotateAmount);
+    }
+
+    public void DeleteObject()
+    {
+        gameCamera.enabled = true;
+        Destroy(pendingObject);
+        objConfirmUI.SetActive(false);
     }
 
     float RoundToNearestGrid(float pos)
