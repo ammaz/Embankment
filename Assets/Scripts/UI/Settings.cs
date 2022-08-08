@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using BitBenderGames;
 
 public class Settings : MonoBehaviour
 {
@@ -26,5 +27,10 @@ public class Settings : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void EnableOrDisableCamera(bool check)
+    {
+        GameObject.Find("Main Camera").GetComponent<MobileTouchCamera>().enabled = check;
     }
 }
