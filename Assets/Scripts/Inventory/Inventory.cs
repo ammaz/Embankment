@@ -42,12 +42,18 @@ public class Inventory : MonoBehaviour
 
     //This list will hold all the items of player hotbar
     public List<Item> hotbarItemList = new List<Item>();
-    public HotbarController hotbarController;
+    //public HotbarController hotbarController;
+    public int hotbarSlotSize;
 
     //Adding crafting Queue
     private Queue<CraftingRecipe> craftingQueue = new Queue<CraftingRecipe>();
     //Check for if player is currently crafting or not
     private bool isCrafting = false;
+
+    private void Start()
+    {
+        
+    }
 
     //This function will take care for switching the item (We will send the item that we want to switch to from inventory to hotbar)
     public void SwitchHorbarInventory(Item item)
@@ -58,7 +64,7 @@ public class Inventory : MonoBehaviour
             if (i == item)
             {
                 //If we dont have enough space in hotbar
-                if (hotbarItemList.Count >= hotbarController.HotbarSlotSize)
+                if (hotbarItemList.Count >= hotbarSlotSize)
                 {
                     Debug.Log("No more slots available in hotbar");
                 }
