@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour
 
     //Gameplay UI
     public GameObject gameplayUI;
+    public GameObject pausePanel;
 
     //Health Bar Canvas
     public Canvas HealthBarCanvas;
@@ -150,6 +151,7 @@ public class LevelManager : MonoBehaviour
         gameplayUI.SetActive(false);
         VictoryPanel.SetActive(false);
         DefeatPanel.SetActive(false);
+        pausePanel.SetActive(false);
         loadingScreen.SetActive(true);
         StartCoroutine(LoadAsynchronously(0));
     }

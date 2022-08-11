@@ -61,11 +61,6 @@ public class MainMenu : MonoBehaviour
             levelInfo.text = "Please select a level";
         }
 
-        else if (levelIndex == 2 || levelIndex == 3 || levelIndex == 4 || levelIndex == 5)
-        {
-            levelInfo.text = "Coming Soon!";
-        }
-
         else
         {
             levelScreen.SetActive(false);
@@ -83,7 +78,7 @@ public class MainMenu : MonoBehaviour
         }
         else if (levelIndex == 2)
         {
-            levelInfo.text = "Level 2\n\nVolcanic Island";
+            levelInfo.text = "Level 2\n\nBeach Island";
         }
         else if (levelIndex == 3)
         {
@@ -107,7 +102,7 @@ public class MainMenu : MonoBehaviour
     {
         slider.value = 0;
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(1);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
         asyncOperation.allowSceneActivation = false;
         float progress = 0;
 
