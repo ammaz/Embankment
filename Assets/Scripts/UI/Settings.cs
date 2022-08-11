@@ -33,4 +33,14 @@ public class Settings : MonoBehaviour
     {
         GameObject.Find("Main Camera").GetComponent<MobileTouchCamera>().enabled = check;
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void UnPauseGame()
+    {
+        Time.timeScale = 1;
+    }
 }

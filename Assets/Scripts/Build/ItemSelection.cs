@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ItemSelection : MonoBehaviour
 {
     public GameObject selectedObject;
+    public List<GameObject> selectPlayers = new List<GameObject>();
     public Text objNameText;
     private BuildingManager buildingManager;
     public GameObject objUI;
@@ -33,6 +34,26 @@ public class ItemSelection : MonoBehaviour
                 {
                     Select(hit.collider.gameObject);
                 }
+                else if (hit.collider.gameObject.CompareTag("Player"))
+                {
+                    Select(hit.collider.gameObject);
+                }
+                else if (selectedObject!=null && selectedObject.CompareTag("Player"))
+                {
+                    //selectedObject.GetComponent<PlayerAI>().walkPoint = hit.point;
+                    //selectedObject.GetComponent<PlayerAI>().walkPointSet = true;
+
+                    foreach(GameObject o in selectPlayers)
+                    {
+                        if (o != null)
+                        {
+                            o.GetComponent<PlayerAI>().walkPoint = hit.point;
+                            o.GetComponent<PlayerAI>().walkPointSet = true;
+                        }       
+                    }
+
+                    Deselect();
+                }
             }
         }
 
@@ -44,39 +65,69 @@ public class ItemSelection : MonoBehaviour
 
     private void Select(GameObject obj)
     {
-        Debug.Log("SelectItemSelection");
-        buildingManager.gameCamera.enabled = false;
-        if (obj == selectedObject) return;
-        if (selectedObject != null) Deselect();
-        Outline outline = obj.GetComponent<Outline>();
-        if (outline == null)
+        if (obj.CompareTag("Object"))
         {
-            obj.AddComponent<Outline>();
-            obj.GetComponent<Outline>().OutlineMode = Outline.Mode.OutlineVisible;
+            //For Objects
+            buildingManager.gameCamera.enabled = false;
+            if (obj == selectedObject) return;
+            if (selectedObject != null) Deselect();
+            Outline outline = obj.GetComponent<Outline>();
+            if (outline == null)
+            {
+                obj.AddComponent<Outline>();
+                obj.GetComponent<Outline>().OutlineMode = Outline.Mode.OutlineVisible;
+            }
+            else
+            {
+                outline.enabled = true;
+            }
+
+            //objNameText.text = obj.name;
+            objNameText.text = obj.name.Substring(0, obj.name.IndexOf('('));
+            objUI.SetActive(true);
+            selectedObject = obj;
+        }
+
+        else if (obj.CompareTag("Player"))
+        {
+            //For Player
+            buildingManager.gameCamera.enabled = false;
+            if (obj == selectedObject) return;
+            obj.GetComponent<PlayerAI>().playerSelectUI.SetActive(true);
+            selectedObject = obj;
+            selectPlayers.Add(selectedObject);
+        }
+        
+    }
+
+    public void Deselect()
+    {
+        if (selectedObject.CompareTag("Player"))
+        {
+            buildingManager.gameCamera.enabled = true;
+            //selectedObject.GetComponent<PlayerAI>().playerSelectUI.SetActive(false);
+            //selectedObject = null;
+
+            foreach (GameObject o in selectPlayers)
+            {
+                if(o != null)
+                    o.GetComponent<PlayerAI>().playerSelectUI.SetActive(false);
+            }
+
+            selectPlayers.Clear();
+            selectedObject = null;
         }
         else
         {
-            outline.enabled = true;
+            buildingManager.gameCamera.enabled = true;
+            objUI.SetActive(false);
+            selectedObject.GetComponent<Outline>().enabled = false;
+            selectedObject = null;
         }
-
-        //objNameText.text = obj.name;
-        objNameText.text = obj.name.Substring(0, obj.name.IndexOf('('));
-        objUI.SetActive(true);
-        selectedObject = obj;
-    }
-
-    private void Deselect()
-    {
-        Debug.Log("DeselectItemSelection");
-        buildingManager.gameCamera.enabled = true;
-        objUI.SetActive(false);
-        selectedObject.GetComponent<Outline>().enabled = false;
-        selectedObject = null;
     }
 
     public void Move()
     {
-        Debug.Log("MoveItemSelection");
         buildingManager.gameCamera.enabled = false;
         buildingManager.pendingObject = selectedObject;
         buildingManager.materials[2] = selectedObject.GetComponent<MeshRenderer>().material;
@@ -84,17 +135,16 @@ public class ItemSelection : MonoBehaviour
 
     public void Rotate()
     {
-        Debug.Log("RotateItemSelection");
         buildingManager.gameCamera.enabled = true;
         selectedObject.transform.Rotate(Vector3.up, buildingManager.rotateAmount);
     }
 
     public void Delete()
     {
-        Debug.Log("DeleteItemSelection");
         buildingManager.gameCamera.enabled = true;
         GameObject objToDestroy = selectedObject;
         Deselect();
+        Destroy(objToDestroy.GetComponent<HealthManager>().HealthBarSlider.gameObject);
         Destroy(objToDestroy);
     }
 }

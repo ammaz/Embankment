@@ -10,11 +10,23 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
+        /*
         if (instance == null)
         {
             instance = this;
         }
 
+        DontDestroyOnLoad(gameObject);
+        */
+        if (instance && instance != this)
+        {
+            // Destroy myself
+            Destroy(gameObject);
+            return;
+        }
+
+        // Otherwise store my reference and make me DontDestroyOnLoad
+        instance = this;
         DontDestroyOnLoad(gameObject);
     }
     #endregion

@@ -27,7 +27,6 @@ public class HotbarController : MonoBehaviour
         {
             if (Input.GetKeyDown(hotbarKeys[i]))
             {
-                Debug.Log("Use Item: " + i);
                 //use item
                 hotbarSlots[i].UseItem();
                 return;

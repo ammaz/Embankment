@@ -5,8 +5,21 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
+    #region singleton
+
+    public static TimerController instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    #endregion
+
     //Change for reply
-    public float timeValue = 90;
+    public float timeValue = 63;
     public Text timeText;
 
     void Start()

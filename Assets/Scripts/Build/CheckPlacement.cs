@@ -1,5 +1,4 @@
 using System.Collections;
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +19,10 @@ public class CheckPlacement : MonoBehaviour
         {
             buildingManager.canPlace = false;
         }
+        else
+        {
+            //Do Nothing
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -27,6 +30,10 @@ public class CheckPlacement : MonoBehaviour
         if (other.gameObject.CompareTag("Object"))
         {
             buildingManager.canPlace = true;
+        }
+        else
+        {
+            //Do Nothing
         }
     }
 }

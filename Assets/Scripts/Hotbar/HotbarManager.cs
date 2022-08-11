@@ -43,4 +43,14 @@ public class HotbarManager : MonoBehaviour
             HotbarObjects[a] = objectList.Find(obj => obj.name == Inventory.instance.hotbarItemList[a].name);
         }
     }
+
+    public void SpawnPlayer(int index)
+    {
+        if (HotbarManager.instance.HotbarObjects[index] != null && HotbarManager.instance.HotbarObjects[index].tag == "Player" && LevelManager.instance.AttackPhase)
+        {
+            GameObject player = Instantiate(HotbarManager.instance.HotbarObjects[index], BuildingManager.instance.pos, transform.rotation);
+            player.GetComponent<HealthManager>().SetupHealthBar(LevelManager.instance.HealthBarCanvas , LevelManager.instance.Camera);
+        }
+    }
+
 }

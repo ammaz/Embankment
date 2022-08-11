@@ -1,17 +1,32 @@
 using BitBenderGames;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildingManager : MonoBehaviour
 {
+    #region singleton
+
+    public static BuildingManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    #endregion
+
+
     public GameObject pendingObject;
     //public GameObject[] objectList;
 
     //Position where we want to put our objects
-    private Vector3 pos;
+    public Vector3 pos;
 
     //Where camera is pointing (From this raycast we will be able to know where our player wants to place an object)
     private RaycastHit hit;
@@ -33,6 +48,9 @@ public class BuildingManager : MonoBehaviour
 
     //For Camera
     public MobileTouchCamera gameCamera;
+
+    //Health UI
+    //public Canvas HealthBarCanvas;
 
     //For Object Confirm UI
     public Text objName;
@@ -122,7 +140,6 @@ public class BuildingManager : MonoBehaviour
             {
                 pos = hit.point;
             }
-
         }    
     }
 
@@ -141,11 +158,11 @@ public class BuildingManager : MonoBehaviour
     //Select object (Need to use it with hotbar for future)
     public void SelectObject(int index)
     {
-        if (HotbarManager.instance.HotbarObjects[index] != null && HotbarManager.instance.HotbarObjects[index].tag == "Object")
+        if (HotbarManager.instance.HotbarObjects[index] != null && HotbarManager.instance.HotbarObjects[index].tag == "Object" && LevelManager.instance.BuildPhase)
         {
-            Debug.Log("SelectObject");
             gameCamera.enabled = false;
-            pendingObject = Instantiate(HotbarManager.instance.HotbarObjects[index], pos, transform.rotation);
+            //pendingObject = Instantiate(HotbarManager.instance.HotbarObjects[index], pos, transform.rotation);
+            pendingObject = Instantiate(HotbarManager.instance.HotbarObjects[index], pos, Quaternion.Euler(0, 90, 0));
             materials[2] = pendingObject.GetComponent<MeshRenderer>().material;
             objConfirmUI.SetActive(true);
             objName.text = "" + HotbarManager.instance.HotbarObjects[index].name;
@@ -156,9 +173,10 @@ public class BuildingManager : MonoBehaviour
     {
         if (canPlace)
         {
-            Debug.Log("PlaceObject");
             gameCamera.enabled = true;
             pendingObject.GetComponent<MeshRenderer>().material = materials[2];
+            if (pendingObject.GetComponent<Outline>() != null)
+                pendingObject.GetComponent<Outline>().enabled = false;
             pendingObject = null;
             objConfirmUI.SetActive(false);
         }  
@@ -166,7 +184,6 @@ public class BuildingManager : MonoBehaviour
 
     public void RotateObject()
     {
-        Debug.Log("RotateObject");
         gameCamera.enabled = true;
         pendingObject.transform.Rotate(Vector3.up, rotateAmount);
     }
@@ -174,6 +191,7 @@ public class BuildingManager : MonoBehaviour
     public void DeleteObject()
     {
         gameCamera.enabled = true;
+        Destroy(pendingObject.GetComponent<HealthManager>().HealthBarSlider.gameObject);
         Destroy(pendingObject);
         objConfirmUI.SetActive(false);
     }
