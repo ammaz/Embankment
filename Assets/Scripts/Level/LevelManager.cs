@@ -60,6 +60,11 @@ public class LevelManager : MonoBehaviour
     public Text loadingProgressText;
     public GameObject loadingScreen;
 
+    //Wall Animator
+    public GameObject Wall;
+    //Explosives
+    public GameObject[] ExplosiveParticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +85,25 @@ public class LevelManager : MonoBehaviour
         panel.SetActive(true);
         yield return new WaitForSeconds(4f);
         panel.SetActive(false);
+    }
+
+    public IEnumerator TriggerWallExplosion()
+    {
+        yield return new WaitForSeconds(4f);
+        Wall.GetComponent<Animator>().SetTrigger("WallDestroy");
+
+        foreach (GameObject i in ExplosiveParticles)
+        {
+            i.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(4f);
+        Destroy(Wall);
+
+        foreach (GameObject i in ExplosiveParticles)
+        {
+            Destroy(i);
+        }
     }
 
     public void GameOver()
@@ -131,6 +155,7 @@ public class LevelManager : MonoBehaviour
             BuildPhase = false;
             AttackPhase = true;
             StartCoroutine(DisplayPhasePanel(AttackPhasePanel));
+            StartCoroutine(TriggerWallExplosion());
             TimerController.instance.timeValue = 123;
         }
         else if (TimerController.instance.timeValue <= 0 && AttackPhase)

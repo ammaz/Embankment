@@ -6,6 +6,20 @@ using UnityEngine.UI;
 
 public class ItemSelection : MonoBehaviour
 {
+
+    #region singleton
+
+    public static ItemSelection instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    #endregion
+
     public GameObject selectedObject;
     public List<GameObject> selectPlayers = new List<GameObject>();
     public Text objNameText;

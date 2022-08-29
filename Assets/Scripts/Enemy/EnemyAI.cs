@@ -91,7 +91,9 @@ public class EnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        NavMeshHit hit;
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround) && NavMesh.SamplePosition(walkPoint, out hit, 1f, NavMesh.AllAreas))
             walkPointSet = true;
     }
 
@@ -193,6 +195,7 @@ public class EnemyAI : MonoBehaviour
 
             Rigidbody rb = Instantiate(projectile, shootingPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+
             //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
             ///End of attack code
 

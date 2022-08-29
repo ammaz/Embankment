@@ -158,9 +158,10 @@ public class BuildingManager : MonoBehaviour
     //Select object (Need to use it with hotbar for future)
     public void SelectObject(int index)
     {
-        if (HotbarManager.instance.HotbarObjects[index] != null && HotbarManager.instance.HotbarObjects[index].tag == "Object" && LevelManager.instance.BuildPhase)
+        if (HotbarManager.instance.HotbarObjects[index] != null && HotbarManager.instance.HotbarObjects[index].tag == "Object" && LevelManager.instance.BuildPhase && objConfirmUI.active==false)
         {
             gameCamera.enabled = false;
+            ItemSelection.instance.objUI.SetActive(false);
             //pendingObject = Instantiate(HotbarManager.instance.HotbarObjects[index], pos, transform.rotation);
             pendingObject = Instantiate(HotbarManager.instance.HotbarObjects[index], pos, Quaternion.Euler(0, 90, 0));
             materials[2] = pendingObject.GetComponent<MeshRenderer>().material;
