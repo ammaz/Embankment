@@ -126,6 +126,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void Replay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void Victory()
     {
         VictoryOil.text = "" + 100;

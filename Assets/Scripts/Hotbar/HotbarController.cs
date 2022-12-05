@@ -5,7 +5,8 @@ using UnityEngine;
 public class HotbarController : MonoBehaviour
 {
     //Getting count of all the hotbarslots
-    public int HotbarSlotSize => gameObject.transform.childCount;
+    //public int HotbarSlotSize => gameObject.transform.childCount;
+    public int HotbarSlotSize = 6;
     //Storing hotbarslots into List
     private List<ItemSlot> hotbarSlots = new List<ItemSlot>();
 

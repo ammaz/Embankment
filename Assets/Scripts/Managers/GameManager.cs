@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Starting Resources
-        AddMoneyItemToInventory(100);
-        AddOilItemToInventory(50);
+        AddMoneyItemToInventory(800);
+        AddOilItemToInventory(500);
         MainMenu.instance.CountMoneyOrOil();
     }
 
