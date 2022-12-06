@@ -21,7 +21,7 @@ public class TestScript : MonoBehaviour
             //Debug.Log(Inventory.instance.hotbarItemList);
             for(int a = 0; a < Inventory.instance.hotbarItemList.Count; a++)
             {
-                Debug.Log(Inventory.instance.hotbarItemList[a].name);
+                //Debug.Log(Inventory.instance.hotbarItemList[a].name);
                 hotbarButton[a].image.sprite=Inventory.instance.hotbarItemList[a].icon;
             }
         }

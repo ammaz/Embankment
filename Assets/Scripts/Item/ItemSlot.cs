@@ -33,7 +33,7 @@ public class ItemSlot : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftAlt))
         {
-            Debug.Log("Trying to switch");
+            //Debug.Log("Trying to switch");
             Inventory.instance.SwitchHorbarInventory(item);
         }
         else

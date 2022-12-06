@@ -66,11 +66,11 @@ public class Inventory : MonoBehaviour
                 //If we dont have enough space in hotbar
                 if (hotbarItemList.Count >= hotbarSlotSize)
                 {
-                    Debug.Log("No more slots available in hotbar");
+                    //Debug.Log("No more slots available in hotbar");
                 }
                 else
                 {
-                    Debug.Log("inventory to hotbar");
+                    //Debug.Log("inventory to hotbar");
                     //Adding item to hotbar
                     hotbarItemList.Add(item);
                     //Remove item from inventory
@@ -104,7 +104,7 @@ public class Inventory : MonoBehaviour
         {
             if (i == item)
             {
-                Debug.Log("hotbar to inventory");
+                //Debug.Log("hotbar to inventory");
                 hotbarItemList.Remove(item);
                 inventoryItemList.Add(item);
                 onItemChange.Invoke();

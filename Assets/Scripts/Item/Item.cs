@@ -17,7 +17,7 @@ public class Item : ScriptableObject
     //Using virtual method because I will expand and add features in it(Override it) in crafting and recipe class 
     public virtual void Use()
     {
-        Debug.Log("Using "+ name);
+        //Debug.Log("Using "+ name);
     }
 
     public virtual string GetItemDescription()

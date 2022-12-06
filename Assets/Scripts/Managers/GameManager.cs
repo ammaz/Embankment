@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     //Whenever player will use the item this message will be displayed
     public void OnStatItemUse(StatItemType itemType, int amount)
     {
-        Debug.Log("Consuming " + itemType + " Add amount: " + amount);
+        //Debug.Log("Consuming " + itemType + " Add amount: " + amount);
     }
 
     //I will add touch position here and replace Vector2 buttonPos (Subject to change) (ForTouchSystem)
